@@ -17,7 +17,7 @@ const server = http.createServer(app)
 // ✅ Setup CORS correctly for frontend on port 5173
 export const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors({
-  origin: "http://localhost:5173", // or your React app's origin
+  origin: "*", // or your React app's origin
   credentials: true
 }));
 app.use(cookieParser())
@@ -61,7 +61,9 @@ app.get("/api/status", (req, res) => {
     user: req.user
   });
 });
-
+app.get("/",(req,res)=>{
+  res.send("Server is Runinng")
+})
 // Route SetsUp
 app.use("/api/",userroutes)
 app.use("/api/",messageRoutes)
