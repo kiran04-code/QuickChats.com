@@ -6,6 +6,7 @@ import toast from "react-hot-toast"
 // Create Context
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = backendUrl
+axios.defaults.withCredentials = true; // ✅ Add this line
 
 export const AuthContext = createContext();
 
