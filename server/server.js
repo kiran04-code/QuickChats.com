@@ -17,7 +17,7 @@ const server = http.createServer(app)
 // ✅ Setup CORS correctly for frontend on port 5173
 export const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://chatapp-iota-pink.vercel.app/",
     methods: ["GET", "POST"]
   }
 });
@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors({
-  origin: "*", // or your React app's origin
+  origin: "https://chatapp-iota-pink.vercel.app/", // or your React app's origin
   credentials: true
 }));
 app.use(cookieParser())
