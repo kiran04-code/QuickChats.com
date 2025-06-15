@@ -8,7 +8,7 @@ import { useAuth } from './context/AuthContext';
 function App() {
   const {authUser}  = useAuth()
   return (
- <div className="bg-[url('./public/bgImage.svg')]  bg-center bg-no-repeat bg-cover" >
+ <div className="bg-[url('/bgImage.svg')]  bg-center bg-no-repeat bg-cover" >
 <Toaster
   position="top-right"
   reverseOrder={false}
