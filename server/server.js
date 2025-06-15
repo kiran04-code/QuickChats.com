@@ -8,7 +8,7 @@ import "dotenv/config"
 import { conneDB } from "./config/db.js"
 import userroutes from "./routes/user.js"
 import messageRoutes from "./routes/message.js"
-const port =  process.env.PORT || 3007
+
 import http from "http"
 // create the server using node http beacuse the socet.io is not support to the express
 const server = http.createServer(app)
@@ -61,12 +61,18 @@ app.get("/api/status", (req, res) => {
     user: req.user
   });
 });
-app.get("/",(req,res)=>{
-  res.send("Server is Runinng")
-})
+app.get("/api", (req, res) => {
+  res.send("API running");
+});
+
 // Route SetsUp
 app.use("/api/",userroutes)
 app.use("/api/",messageRoutes)
+if(process.env.NODE_ENV !== "production"){
+  const port =  process.env.PORT || 3007
 server.listen(port,(req,res)=>{
 console.log(`server is Running on Port http://localhost:${port}`)
 })
+}
+// For vercal
+export default server
