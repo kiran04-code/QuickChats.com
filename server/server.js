@@ -12,14 +12,14 @@ import http from "http";
 
 const server = http.createServer(app);
 
-// ✅ Define allowed origins for both development and production
+// ✅ Allowed Origins (No trailing slashes)
 const allowedOrigins = [
-  "https://chatapp-iota-pink.vercel.app/",
+  "https://chatapp-iota-pink.vercel.app",
   "http://localhost:5173"
 ];
 
-// ✅ Dynamic CORS for Express
-app.use(cors({
+// ✅ Global CORS Middleware for Express
+const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -27,10 +27,15 @@ app.use(cors({
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true
-}));
+  credentials: true,
+};
 
-// ✅ Dynamic CORS for Socket.io
+app.use(cors(corsOptions));
+
+// ✅ Handle preflight OPTIONS requests globally
+app.options("*", cors(corsOptions));
+
+// ✅ CORS for Socket.io
 export const io = new Server(server, {
   cors: {
     origin: allowedOrigins,
@@ -63,9 +68,9 @@ app.use(checkAuth("access_Token"));
 
 // 🌐 MongoDB Connection
 conneDB(process.env.MONGODB_URL).then(() => {
-  console.log("MongoDB is Connected");
+  console.log("✅ MongoDB is Connected");
 }).catch((error) => {
-  console.log("Error With MongoDB", error);
+  console.log("❌ MongoDB Connection Error", error);
 });
 
 // 🛠️ Routes and Status
@@ -83,11 +88,11 @@ app.get("/api", (req, res) => {
 app.use("/api/", userroutes);
 app.use("/api/", messageRoutes);
 
-// 🌍 Server Start
+// 🌍 Start Server (Only locally)
 if (process.env.NODE_ENV !== "production") {
   const port = process.env.PORT || 3007;
   server.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`🚀 Server is running on http://localhost:${port}`);
   });
 }
 
