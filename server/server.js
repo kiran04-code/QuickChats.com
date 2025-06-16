@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 // ✅ Define allowed origins for both development and production
 const allowedOrigins = [
-  "https://chatapp-iota-pink.vercel.app/",
+  "https://quickchats-com-5.onrender.com/",
   "http://localhost:5173"
 ];
 
