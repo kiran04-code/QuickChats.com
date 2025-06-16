@@ -14,9 +14,10 @@ const server = http.createServer(app);
 
 // ✅ Define allowed origins for both development and production
 const allowedOrigins = [
-  "https://quickchats-com-5.onrender.com/",
+  "https://quickchats-com-5.onrender.com",  // ✅ Corrected
   "http://localhost:5173"
 ];
+
 
 // ✅ Dynamic CORS for Express
 app.use(cors({
