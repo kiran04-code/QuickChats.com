@@ -26,7 +26,11 @@ export async function createUser(req, res) {
             })
 
             const token = await createToken(data); // ✅ await is necessary here
-            res.cookie("access_Token", token).status(200).json({
+            res.cookie("access_Token", token, {
+                httpOnly: true,
+                secure: true,        // 👈 Required for cross-origin in Chrome
+                sameSite: "None",
+            }).status(200).json({
                 sucess: true,
                 message: "Account Created successfully",
                 userData: data,
@@ -64,7 +68,11 @@ export async function Login(req, res) {
             })
         }
         const token = createToken(existedUser)
-        res.cookie("access_Token", token).json({
+        res.cookie("access_Token", token, {
+            httpOnly: true,
+            secure: true,        // 👈 Required for cross-origin in Chrome
+            sameSite: "None",    // 👈 Required for cross-origin in Chrome
+        }).json({
             sucess: true,
             message: "Login SucessFully",
             userData: existedUser
@@ -118,14 +126,14 @@ export const UpdateProfile = async (req, res) => {
 };
 
 export const Logout = (req, res) => {
-  res.clearCookie("access_Token", {
-    httpOnly: true,
-    secure: false, // set to true if HTTPS
-    sameSite: "Lax",
-  });
+    res.clearCookie("access_Token", {
+        httpOnly: true,
+        secure: false, // set to true if HTTPS
+        sameSite: "Lax",
+    });
 
-  return res.status(200).json({
-    success: true,
-    message: "Logout successful",
-  });
+    return res.status(200).json({
+        success: true,
+        message: "Logout successful",
+    });
 };

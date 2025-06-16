@@ -18,7 +18,6 @@ const allowedOrigins = [
   "http://localhost:5173"
 ];
 
-
 // ✅ Dynamic CORS for Express
 app.use(cors({
   origin: function (origin, callback) {
