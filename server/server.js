@@ -84,12 +84,11 @@ app.use("/api/", userroutes);
 app.use("/api/", messageRoutes);
 
 // 🌍 Server Start
-if (process.env.NODE_ENV !== "production") {
-  const port = process.env.PORT || 3007;
-  server.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
-}
+const port = process.env.PORT || 3007;
+server.listen(port, () => {
+  console.log(`🚀 Server is running on port ${port}`);
+});
+
 
 // ✅ For Vercel Export
 export default server;
