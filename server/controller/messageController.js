@@ -111,13 +111,12 @@ export const sendMessageToUser = async (req, res) => {
       senderId: senderIds,
       receiverid: recieverIds,
     });
-
     // ✅ Emit the new message to the receiver socket
     const receiverSocketID = UserSocketMap[recieverIds];
     if (receiverSocketID) {
       io.to(receiverSocketID).emit("newMessage", newchats);
+      
     }
-
     res.json({
       success: true,
       newchats,

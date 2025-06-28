@@ -14,26 +14,21 @@ const server = http.createServer(app);
 
 // ✅ Define allowed origins for both development and production
 const allowedOrigins = [
-  "https://quickchats-com-5.onrender.com",  // ✅ Corrected
+  "https://quickchats-com-5.onrender.com",  // ✅ Corrected"
   "http://localhost:5173"
 ];
 
 // ✅ Dynamic CORS for Express
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: allowedOrigins,
+  methods:["GET","POST"],
   credentials: true
 }));
 
 // ✅ Dynamic CORS for Socket.io
 export const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -69,7 +64,7 @@ conneDB(process.env.MONGODB_URL).then(() => {
 });
 
 // 🛠️ Routes and Status
-app.get("/api/status", (req, res) => {
+app.get("/api/", (req, res) => {
   res.json({
     message: "Server is Live KiraN.Dev!",
     user: req.user
@@ -86,7 +81,7 @@ app.use("/api/", messageRoutes);
 // 🌍 Server Start
 const port = process.env.PORT || 3007;
 server.listen(port, () => {
-  console.log(`🚀 Server is running on port ${port}`);
+  console.log(`🚀 Server is running on port http://localhost${port}`);
 });
 
 

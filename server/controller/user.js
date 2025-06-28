@@ -70,8 +70,8 @@ export async function Login(req, res) {
         const token = createToken(existedUser)
         res.cookie("access_Token", token, {
             httpOnly: true,
-            secure: true,        // 👈 Required for cross-origin in Chrome
-            sameSite: "None",    // 👈 Required for cross-origin in Chrome
+            secure: true,       
+            sameSite: "None",    
         }).json({
             sucess: true,
             message: "Login SucessFully",
@@ -137,3 +137,26 @@ export const Logout = (req, res) => {
         message: "Logout successful",
     });
 };
+
+
+export const checkAuths = async(req,res)=>{
+ try {
+       const userid = req.user
+    const findUser = await User.findById(userid)
+    if(findUser){
+        return res.json({
+            success:true,
+            userData:findUser
+        })
+    }
+
+    else{
+        res.json({
+            success:false
+        })
+    }
+ } catch (error) {
+    console.log(error)
+ }
+    
+}

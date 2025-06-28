@@ -19,7 +19,6 @@ export const ChatContextProvider = ({ children }) => {
             if (data.sucess) {
                 setAllusers(data.useres);
                 setUnseenMessage(data.UnseenMessage)
-
             }
         } catch (error) {
             toast.error(error.message);
@@ -69,7 +68,6 @@ const subscripmessage = async () => {
   socket.on("newMessage", async (newchats) => {
     if (selectedUser && newchats.senderId === selectedUser._id) {
       newchats.seen = true;
-
       setMessage((prev) => [...prev, newchats]);
 
       await axios.put(`/api/markMessageSeen/${selectedUser._id}`);
@@ -90,7 +88,6 @@ const unscripofommessage = () => {
 
 useEffect(() => {
   subscripmessage();
-
   return () => {
     unscripofommessage();
   };

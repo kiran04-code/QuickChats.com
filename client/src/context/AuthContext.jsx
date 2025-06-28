@@ -12,17 +12,8 @@ export const AuthContext = createContext();
 
 // Context Provider Component
 export const AuthContextProvider = ({ children }) => {
-  const [authUser, setAuthuser] = useState(() => {
-    const storedUser = localStorage.getItem("authUser");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-  useEffect(() => {
-    if (authUser) {
-      localStorage.setItem("authUser", JSON.stringify(authUser));
-    } else {
-      localStorage.removeItem("authUser");
-    }
-  }, [authUser]);
+  const [authUser, setAuthuser] = useState();
+
   const [OnlineUser, setOnlineUser] = useState(() => {
     const stored = localStorage.getItem("OnlineUser");
     return stored ? JSON.parse(stored) : [];
@@ -89,6 +80,17 @@ export const AuthContextProvider = ({ children }) => {
       }
     }
   }
+  // checkuserAuth 
+ const handleAuth = async(req,res)=>{
+  try {
+    const {data} = await axios.get("/api/checkAuths",{withCredentials:true})
+    if(data.sucess){
+      setAuthuser(data.userData)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+ }
   // updated the User Profile
   const updatUserProfile = async (body) => {
     try {
@@ -143,7 +145,9 @@ export const AuthContextProvider = ({ children }) => {
     updatUserProfile
 
   }
-
+useEffect(()=>{
+  handleAuth()
+},[])
   return (
     <AuthContext.Provider value={value}>
       {children}
