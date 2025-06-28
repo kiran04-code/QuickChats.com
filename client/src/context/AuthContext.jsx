@@ -27,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       if (!userData || (socket && socket.connected)) return;
 
-      const newSocket = io("https://quickchats-com-6.onrender.com", {
+      const newSocket = io("https://quickchats-com-8.onrender.com", {
         query: { userid: userData._id },
       });
 
