@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 // ✅ Define allowed origins for both development and production
 const allowedOrigins = [
-  "https://quickchats-com-7.onrender.com/",  // ✅ Corrected"
+  "https://quickchats-com-7.onrender.com",  // ✅ Corrected"
   "http://localhost:5173"
 ];
 
@@ -28,7 +28,7 @@ app.use(cors({
 // ✅ Dynamic CORS for Socket.io
 export const io = new Server(server, {
   cors: {
-    origin: "https://quickchats-com-7.onrender.com/",
+    origin: "https://quickchats-com-7.onrender.com",
     methods: ["GET", "POST"],
     credentials: true
   }
